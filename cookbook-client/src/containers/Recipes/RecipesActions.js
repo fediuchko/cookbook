@@ -35,6 +35,10 @@ export const setActiveRecipe = id => ({
     }
 });
 
-export const addRating = () => ({
-    type:constants.FETCH_ALL_RECIPES
+export const addRating = (id,value) => ({
+    type:constants.ADD_RATING,
+    payload :{
+        id,
+        value
+    }
 });

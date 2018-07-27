@@ -5,7 +5,7 @@ import { Card, Image, Button, CardContent, Rating } from 'semantic-ui-react';
 export default ({ recipes, onEdit, onDelete, onView, onRate }) =>
     recipes && recipes.map((recipe, index) => (
         <Card fluid key={index}>
-            <Card.Content>
+            <CardContent>
                 <Image
                     size="tiny"
                     floated="left"
@@ -46,7 +46,7 @@ export default ({ recipes, onEdit, onDelete, onView, onRate }) =>
                     className ='recipe-description'>
             {recipe.description}
                 </Card.Description>
-            </Card.Content>
+            </CardContent>
         </Card>
 
     ));

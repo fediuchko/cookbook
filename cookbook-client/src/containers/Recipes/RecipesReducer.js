@@ -13,6 +13,7 @@ const byId = (state = initialState.byId, action) => {
             return action.payload.byId;
         case constants.UPDATE_RECIPE_SUCCESS:
         case constants.FETCH_RECIPE_SUCCESS:
+        case constants.ADD_RATING_SUCCESS :
             return { ...state, [action.payload._id]: action.payload };
         default: return state;
     }

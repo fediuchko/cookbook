@@ -17,6 +17,7 @@ class RecipeEditing extends React.Component {
     }
 
     static getDrivedStateFromProps(props, state) {
+        console.log(`getDrivedStateFromProps state.recipeToFetch !== props.mutch.params.id - ${state.recipeToFetch !== props.mutch.params.id}`)
         if (state.recipeToFetch !== props.mutch.params.id) {
             return {
                 recipeToFetch: props.mutch.params.id
@@ -26,6 +27,8 @@ class RecipeEditing extends React.Component {
     }
     componentDidMount() {
         if (this.state.recipeToFetch) {
+            console.log(`componentDidMount -this.state.recipeToFetch !===0 `)
+
             this.props.action.fetchRecipe(this.state.recipeToFetch);
         }
     }
@@ -48,12 +51,13 @@ class RecipeEditing extends React.Component {
     }
 
     render() {
+        console.log(` render()`)
         const { isFetching, recipe } = this.props;
 
         return <Container>
             <Grid centered columns={2}>
                 <Grid.Column>{
-                    !!recipe && <RecipeForm
+                    recipe && <RecipeForm
                         dissable={isFetching}
                         title="Edit recipe"
                         onSubmit={this.handleSubmit}

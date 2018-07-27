@@ -4,17 +4,18 @@ import { Modal, Image, Button } from 'semantic-ui-react';
 
 
 export default ({ recipe, onClose }) => (
-  recipe ? <Modal open={!!!recipe} onClose={() => onClose && onClose()}>
+  
+  recipe ? <Modal open={recipe} onClose={() => onClose && onClose()}>
     <Modal.Header>{recipe.title} </Modal.Header>
     <Modal.Content scrolling>
       <Image centered src={dish} size='medium'></Image>
       <Modal.Description>{recipe.description} </Modal.Description>
     </Modal.Content>
     <Modal.Actions>
-      <Button>
+      <Button
         content ='Close'
           color="green"
-       onClick = {() => onClose && onClose()}
+       onClick = {() => onClose && onClose()}>
       </Button>
     </Modal.Actions>
   </Modal> : null

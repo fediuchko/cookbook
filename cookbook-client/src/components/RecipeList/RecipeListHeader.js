@@ -1,5 +1,5 @@
 import React from 'react';
-import { Conteiner, Statistic, Button, Container } from 'semantic-ui-react';
+import { Container, Statistic, Button } from 'semantic-ui-react';
 
 export default ({ onCreate, listLenght }) => (
   <Container style={{ display: 'flex', justifyContent: "space-between", alignItems: "center"}}>

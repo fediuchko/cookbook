@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Container, Grid, Image, Segment,Search,Icon, Input, Dropdown } from 'semantic-ui-react';
+import { Container, Grid, Image, Segment, Search, Icon, Input, Dropdown } from 'semantic-ui-react';
 import { fetchAllRecipes, deleteRecipe } from './RecipesActions';
 import { allRecipes, isRecipesFetching } from './RecipesReducer';
 import logo from '../../assets/logo.png';
@@ -21,54 +21,56 @@ class Recipes extends React.Component {
     componentDidMount() {
         this.props.actions.fetchAllRecipes();
     }
-    handleDelete=id=> {
+    handleDelete = id => {
         this.props.actions.deleteRecipe(id);
     }
     handleEdit = id => {
+        console.log(`handleEdit in Recipies id = ${id}`)
         this.props.history.push(`/recipes/${id}`);
     }
     handleRecipeCreate = () => {
         this.props.history.push(`/recipes/new`);
     }
-    toggleResipeModal = id => {
+    toggleRecipeModal = id => {
+        console.log(`toggleResipeModal in Recipies id = ${id}`)
         this.setState({ activeRecipe: this.props.allRecipes.find(r => r._id === id) });
     }
-    handleModalClose() {
-        this.toggleResipeModal(null);
+    handleModalClose = () => {
+        this.toggleRecipeModal(null);
     }
 
     handleRating = (value, recipeId) => {
-        this.handleEdit(recipeId)
+        this.props.actions.addRating(recipeId,value)
     }
     render() {
         const { isFetching, allRecipes } = this.props;
         const { activeRecipe } = this.state;
         const { isLoading, value, results } = this.state;
 
-        console.log ("allRecipes render - "+  allRecipes);
+        console.log("allRecipes render - " + allRecipes);
         return (
             <Container>
                 <Grid columns={2} divided>
-                <Grid.Row stretched>
-                 <Grid.Column>
-                 <Segment>   <Image src={logo} centered></Image > </Segment>
-                 <Segment>   <Input icon={<Icon name='search' inverted circular link />} placeholder='Search...' />
-)                            </Segment>
-          <Segment> <Dropdown text='Sort by' icon='filter' floating labeled button className='icon'>
-    <Dropdown.Menu>
-      <Dropdown.Header icon='tags' content='Sort by' />
-      <Dropdown.Item>Rating</Dropdown.Item>
-      <Dropdown.Item>Default</Dropdown.Item>
-    </Dropdown.Menu>
-  </Dropdown>
-  </Segment>
-                 </Grid.Column>
+                    <Grid.Row stretched>
+                        <Grid.Column>
+                            <Segment>   <Image src={logo} centered></Image > </Segment>
+                            <Segment>   <Input icon={<Icon name='search' inverted circular link />} placeholder='Search...' />
+                            </Segment>
+                            <Segment> <Dropdown text='Sort by' icon='filter' floating labeled button className='icon'>
+                                <Dropdown.Menu>
+                                    <Dropdown.Header icon='tags' content='Sort by' />
+                                    <Dropdown.Item>Rating</Dropdown.Item>
+                                    <Dropdown.Item>Default</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                            </Segment>
+                        </Grid.Column>
                         <Grid.Column>
                             <Segment
                                 raised
                                 padded
                                 textAlign='center'
-                                loading={isFetching}>
+                                isLoading={isFetching}>
                                 {!(allRecipes && allRecipes.length) && !isFetching
                                     ? <EmptyRecipeList
                                         onCreate={this.handleRecipeCreate} />
@@ -78,10 +80,10 @@ class Recipes extends React.Component {
                                             listLength={allRecipes.length} />
                                         <RecipeList
                                             recipes={allRecipes}
-                                            onView={this.toggleResipeModal.bind()}
-                                            onDelete={this.handleDelete.bind()}
-                                            onEdit={this.handleEdit.bind()} 
-                                            onRate={this.handleRating}/>
+                                            onEdit={this.handleEdit}
+                                            onDelete={this.handleDelete}
+                                            onView={this.toggleRecipeModal}
+                                            onRate={this.handleRating} />
                                     </Fragment>
                                 }
                             </Segment>
@@ -89,7 +91,7 @@ class Recipes extends React.Component {
                         {/* <Grid.Column width={4}>
                         <Image src={logo} ></Image >
                          {/*  */}
-          </Grid.Row>   
+                    </Grid.Row>
                 </Grid>
                 <RecipeModal
                     recipe={activeRecipe}
